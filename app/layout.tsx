@@ -27,7 +27,7 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className="bg-background text-foreground">
+      <body className="min-h-screen bg-background text-foreground antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
             {children}
