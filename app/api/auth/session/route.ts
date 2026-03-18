@@ -7,21 +7,27 @@ export async function GET(request: NextRequest) {
     const escritorioCookie = request.cookies.get("escritorio")?.value
 
     if (!userCookie || !escritorioCookie) {
+      // Retorna 200 com valores nulos para indicar que não há sessão
+      // Isso permite que o cliente saiba que a verificação foi feita
       return NextResponse.json(
-        { user: null, escritorio: null },
-        { status: 401 }
+        { user: null, escritorio: null, authenticated: false },
+        { status: 200 }
       )
     }
 
+    const user = JSON.parse(userCookie)
+    const escritorio = JSON.parse(escritorioCookie)
+
     return NextResponse.json({
-      user: JSON.parse(userCookie),
-      escritorio: JSON.parse(escritorioCookie),
+      user,
+      escritorio,
+      authenticated: true,
     })
   } catch (error) {
     console.error("Erro ao obter sessão:", error)
     return NextResponse.json(
-      { error: "Erro interno do servidor" },
-      { status: 500 }
+      { user: null, escritorio: null, authenticated: false, error: "Erro ao processar sessão" },
+      { status: 200 }
     )
   }
 }

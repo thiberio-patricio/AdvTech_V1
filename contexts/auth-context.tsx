@@ -30,11 +30,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const response = await fetch("/api/auth/session")
         if (response.ok) {
           const data = await response.json()
-          setUser(data.user)
-          setEscritorio(data.escritorio)
+          if (data.user && data.escritorio) {
+            setUser(data.user)
+            setEscritorio(data.escritorio)
+          } else {
+            setUser(null)
+            setEscritorio(null)
+          }
+        } else {
+          // Se não autenticado (401) ou erro, limpar estado
+          setUser(null)
+          setEscritorio(null)
         }
       } catch (error) {
         console.error("Erro ao carregar usuário:", error)
+        setUser(null)
+        setEscritorio(null)
       } finally {
         setIsLoading(false)
       }
