@@ -59,8 +59,7 @@
     "vaul": "^0.9.6",
     "zod": "latest",
     "react-dropzone": "latest",
-    "swagger-ui-react": "latest",
-    "crypto": "latest"
+    "swagger-ui-react": "latest"
   },
   "devDependencies": {
     "@types/node": "^22",
