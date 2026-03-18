@@ -26,27 +26,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Carregar usuário da sessão ao iniciar
   useEffect(() => {
     const loadUserFromSession = async () => {
+      console.log("[v0] Iniciando loadUserFromSession")
       try {
         const response = await fetch("/api/auth/session")
-        if (response.ok) {
-          const data = await response.json()
-          if (data.user && data.escritorio) {
-            setUser(data.user)
-            setEscritorio(data.escritorio)
-          } else {
-            setUser(null)
-            setEscritorio(null)
-          }
+        console.log("[v0] Response status:", response.status)
+        const data = await response.json()
+        console.log("[v0] Session data:", data)
+        
+        if (response.ok && data.user && data.escritorio) {
+          console.log("[v0] Setting user and escritorio")
+          setUser(data.user)
+          setEscritorio(data.escritorio)
         } else {
-          // Se não autenticado (401) ou erro, limpar estado
+          console.log("[v0] No session, clearing state")
           setUser(null)
           setEscritorio(null)
         }
       } catch (error) {
-        console.error("Erro ao carregar usuário:", error)
+        console.error("[v0] Erro ao carregar usuário:", error)
         setUser(null)
         setEscritorio(null)
       } finally {
+        console.log("[v0] Setting isLoading to false")
         setIsLoading(false)
       }
     }
